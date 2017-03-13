@@ -4,21 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <title>React Setup</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+
     <style>
+    body{
+    	float:left;
+    	padding: 0 0 100px 0;
+/*    	background-image: linear-gradient(to left, #ffecd2 0%, #fcb69f 100%);
+    	background-repeat: no-repeat;
+    	min-height: 700px;
+    	box-shadow: 10px 10px 15px #bdc3c7;*/
+    	/*
+    	background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);
+    	background-repeat: no-repeat;
+    	min-height: 600px;
+    	*/
+    }
+    label,span{
+    	font-size:18px;
+    }
+    h1{
+    	font-size: 72px;
+    	color:#777;
+    	margin: 0 auto;
+    	text-align: center;
+    	opacity: 0.6;
+    }
+	#app{
+		padding: 100px 0 100px 0;
+		background-image: linear-gradient(to left, #ffecd2 0%, #fcb69f 100%);
+		background-repeat: no-repeat;
+		min-height: 600px;
+		box-shadow: 10px 10px 15px #bdc3c7;
+    	float:left;
+	}
     .completed {
         opacity: 0.6;
         text-decoration: line-through;
     }
-    .red{
-		color:#a94442;
-    }
+	.red{
+		color:#d9534f;
+	}
+	.list-group{
+		float:left;
+		margin-bottom: 0;
+	}
+	.col-lg-6{
+		padding-right: 0px;
+	}
+	.clearDiv{
+		clear: both;
+		padding-left: 100px;
+	}
     </style>
 </head>
 
 <body>
     <!-- 欲插入 React Component 的位置 -->
-    <div id="boder"></div>
+    <div id="app"></div>
     <script src="dist/bundle.js"></script>
 </body>
 
