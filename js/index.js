@@ -5,32 +5,58 @@ const ENTER_KEY = 13;
 
 let TodoPanel = React.createClass({
 	getInitialState : function(){
+		// console.log('getInitialState');
 		let array;
+		let isAllCompleted = true;
 		if(localStorage.todoList){
 			array = JSON.parse(localStorage.todoList);
 		}
-		return ( {todoList: array || [] , newtodo:"" } )
+		if(array.length===0 || array.find(t=>t.isCheck===false)){
+			isAllCompleted = false;
+		}
+
+		return ( {todoList: array || [] , newtodo:"" ,isAllCompleted:isAllCompleted } )
 	},
+	/*componentWillMount() {
+	   console.log('componentWillMount');
+	},
+	componentDidMount() {
+	   console.log('componentDidMount');
+	},
+	componentWillUpdate() {
+	   console.log('componentWillUpdate');
+	},
+	componentDidUpdate() {
+	   console.log('componentDidUpdate');
+
+	},*/
 	handleInput : function(e){
 		this.setState({newtodo:e.target.value});
 	},
 	handleKeyDown : function(event){
-		// console.log(event.which);
+		// console.log('handleKeyDown',event.which);
 		if(event.which===ENTER_KEY){
 			this.insert();
 		}
 	},
 	toggleCheck : function(i){
+		// console.log('toggleCheck');
 		let arr = this.state.todoList;
+		let isAllCompleted = true;
+
 		arr[i].isCheck = !arr[i].isCheck ;
-		this.setState({todoList:arr});
+		if(arr.find(t=>t.isCheck===false)){
+			isAllCompleted=false;
+		}
+		this.setState({todoList:arr,isAllCompleted:isAllCompleted});
 	},
 	insert : function(){
+		// console.log('insert');
 		if(this.state.newtodo){
 		let arr = this.state.todoList;
 		let t = {todo:this.state.newtodo ,isCheck:false};		
 			arr.push(t);
-			this.setState({todoList:arr, newtodo:""});
+			this.setState({todoList:arr, newtodo:"",isAllCompleted:false});
 			// console.log(JSON.stringify(arr));
 		}
 	},
@@ -41,25 +67,46 @@ let TodoPanel = React.createClass({
 		this.setState({todoList:arr});
 	},
 	eachTodo : function(t,i){
+		// console.log('eachTodo');
 		return(
 			<TodoItem todo={t.todo} isCheck={t.isCheck} key={i} index={i} removeTodo={this.remove} handleCheckbox={this.toggleCheck} />
 			);
 	},
 	clearDiv : function(){
+		// console.log('clearDiv');
 		if( this.state.todoList.find(t=>t.isCheck===true) ){
 			return (<div className='clearDiv col-lg-offset-7' ><a href='#' onClick={this.clear} >clear completed</a></div>);
 		}
 	},
 	clear : function(){
+		// console.log('clear');
 		let arr = this.state.todoList.filter(t=>t.isCheck===false);
-		this.setState({todoList:arr});
+		this.setState({todoList:arr,isAllCompleted:false});
+	},
+	allCompleted :function(){
+		let arr = this.state.todoList;
+		let isAllCompleted = this.state.isAllCompleted;
+
+		if(isAllCompleted){
+			arr.filter(t=>t.isCheck=false);
+			isAllCompleted=false;
+		}else{
+			arr.filter(t=>t.isCheck=true);
+			isAllCompleted=true;
+		}
+
+		this.setState({todoList:arr,isAllCompleted:isAllCompleted});
 	},
 	render : function(){
 			localStorage.todoList = JSON.stringify(this.state.todoList);
+			// console.log('render()');
 		return (
 				<div>
 					<h1>Todos</h1>
 					<div className='input-group col-lg-6 col-lg-offset-3'>
+						<span className='input-group-addon'>
+							<input type='checkbox' className='glyphicon glyphicon-ok-circle' onClick={this.allCompleted} checked={this.state.isAllCompleted} ></input>
+						</span>
 						<input className='form-control input-lg' type="text" onChange={this.handleInput} value={this.state.newtodo} onKeyDown={this.handleKeyDown} />
 						<span className='input-group-btn'><button className='btn btn-info btn-lg' onClick={this.insert}>新增</button> </span>
 					</div>
@@ -74,8 +121,6 @@ let TodoPanel = React.createClass({
 
 let TodoItem = React.createClass({
 	handleCheck : function(){
-		// console.log('handleCheck' , this.props.isCheck);
-		// this.setState({isCheck : !this.state.isCheck});
 		// console.log('handleCheck');
 		this.props.handleCheckbox(this.props.index);
 	},
@@ -97,7 +142,7 @@ let TodoItem = React.createClass({
 							<div className='media-left'>
 								<input type="checkbox" checked={this.props.isCheck} />
 							</div>							
-							<div className='media-body'>
+							<div className='media-body labelDiv'>
 								{this.isComplete()}
 							</div>				
 						</div>
