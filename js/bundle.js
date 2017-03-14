@@ -9790,7 +9790,7 @@ var TodoPanel = _react2.default.createClass({
 
 	getInitialState: function getInitialState() {
 		// console.log('getInitialState');
-		var array = void 0;
+		var array = [];
 		var isAllCompleted = true;
 
 		if (localStorage.todoList) {
@@ -9802,7 +9802,7 @@ var TodoPanel = _react2.default.createClass({
 			isAllCompleted = false;
 		}
 
-		return { todoList: array || [], newtodo: "", isAllCompleted: isAllCompleted };
+		return { todoList: array, newtodo: "", isAllCompleted: isAllCompleted };
 	},
 	handleInput: function handleInput(e) {
 		this.setState({ newtodo: e.target.value });

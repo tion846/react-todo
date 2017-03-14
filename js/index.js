@@ -6,7 +6,7 @@ const ENTER_KEY = 13;
 let TodoPanel = React.createClass({
 	getInitialState : function(){
 		// console.log('getInitialState');
-		let array;
+		let array = [];
 		let isAllCompleted = true;
 
 		if(localStorage.todoList){
@@ -16,7 +16,7 @@ let TodoPanel = React.createClass({
 			isAllCompleted = false;
 		}
 
-		return ( {todoList: array || [] , newtodo:"" ,isAllCompleted:isAllCompleted } )
+		return ( {todoList: array, newtodo:"" ,isAllCompleted:isAllCompleted } )
 	},
 	handleInput : function(e){
 		this.setState({newtodo:e.target.value});

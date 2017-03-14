@@ -15,8 +15,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-// app.get('/')
-
 app.listen(3000, function() {
   console.log('Server started: http://localhost:' + 3000 + '/');
 });
