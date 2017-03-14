@@ -8,6 +8,7 @@ let TodoPanel = React.createClass({
 		// console.log('getInitialState');
 		let array;
 		let isAllCompleted = true;
+
 		if(localStorage.todoList){
 			array = JSON.parse(localStorage.todoList);
 		}
@@ -17,19 +18,6 @@ let TodoPanel = React.createClass({
 
 		return ( {todoList: array || [] , newtodo:"" ,isAllCompleted:isAllCompleted } )
 	},
-	/*componentWillMount() {
-	   console.log('componentWillMount');
-	},
-	componentDidMount() {
-	   console.log('componentDidMount');
-	},
-	componentWillUpdate() {
-	   console.log('componentWillUpdate');
-	},
-	componentDidUpdate() {
-	   console.log('componentDidUpdate');
-
-	},*/
 	handleInput : function(e){
 		this.setState({newtodo:e.target.value});
 	},
@@ -63,8 +51,13 @@ let TodoPanel = React.createClass({
 	remove : function(index){
 		// console.log('remove clicked ' + index);
 		let arr = this.state.todoList;
+		let isAllCompleted = true;
+
 		arr.splice(index,1);
-		this.setState({todoList:arr});
+		if(arr.length===0 || arr.find(t=>t.isCheck===false)){
+			isAllCompleted=false;
+		}
+		this.setState({todoList:arr,isAllCompleted:isAllCompleted});
 	},
 	eachTodo : function(t,i){
 		// console.log('eachTodo');

@@ -77,7 +77,7 @@ let Component = React.createClass({
 ReactDOM.render(
   <div>
     <Component anyName="my name is bacon">this is title</Component>
-  	<Componnet anyName="my name is niko">I Lvoe Bacon</Component>
+  	<Component anyName="my name is niko">I Lvoe Bacon</Component>
   </div>,
   document.getElementById('myid') );
 ```
